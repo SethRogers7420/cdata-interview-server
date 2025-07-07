@@ -1,4 +1,5 @@
 import express from "express";
+import { getAddressHistoryForUser, getAllUsers, getUser } from "./db";
 
 const app = express();
 
@@ -6,6 +7,41 @@ app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("Hello, World!");
+});
+
+app.get("/login", (req, res) => {
+  const { username, password } = req.query;
+
+  const user = getUser(username as string);
+  if (user === null) {
+    res.status(404).json({ message: "User not found" });
+    return;
+  }
+  if (user!.password !== password) {
+    res.status(401).json({ message: "Invalid password" });
+    return;
+  }
+
+  res.json({ message: "Login successful", user: user });
+});
+
+app.get("/address-history", (req, res) => {
+  const { username } = req.query;
+
+  if (!username) {
+    res.status(400).json({ message: "Username is required" });
+    return;
+  }
+
+  const allUsers = getAllUsers();
+
+  for (const user of allUsers) {
+    const addresses = getAddressHistoryForUser(user.username);
+    if (user.username === username) {
+      res.json({ addresses });
+      return;
+    }
+  }
 });
 
 const port = process.env.PORT || 55555;
