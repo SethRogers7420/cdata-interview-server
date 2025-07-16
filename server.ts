@@ -9,10 +9,10 @@ app.get("/", (req, res) => {
   res.send("Hello, World!");
 });
 
-app.get("/login", (req, res) => {
+app.get("/login", async (req, res) => {
   const { username, password } = req.query;
 
-  const user = getUser(username as string);
+  const user = await getUser(username as string);
   if (user === null) {
     res.status(404).json({ message: "User not found" });
     return;
@@ -25,7 +25,7 @@ app.get("/login", (req, res) => {
   res.json({ message: "Login successful", user: user });
 });
 
-app.get("/address-history", (req, res) => {
+app.get("/address-history", async (req, res) => {
   const { username } = req.query;
 
   if (!username) {
@@ -33,7 +33,7 @@ app.get("/address-history", (req, res) => {
     return;
   }
 
-  const allUsers = getAllUsers();
+  const allUsers = await getAllUsers();
 
   for (const user of allUsers) {
     const addresses = getAddressHistoryForUser(user.username);

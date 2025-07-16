@@ -21,7 +21,7 @@ const users: User[] = [
   { username: "user1", password: "password1" },
 ];
 
-export const userAddresses: UserAddress[] = [
+const userAddresses: UserAddress[] = [
   { username: "admin", address: "123 Main St" },
   { username: "admin", address: "456 Elm St" },
   { username: "admin", address: "789 Oak St" },
@@ -30,17 +30,23 @@ export const userAddresses: UserAddress[] = [
 ];
 
 /** Returns all users in the database  */
-export function getAllUsers(): User[] {
-  return users;
+export async function getAllUsers(): Promise<User[]> {
+  return Promise.resolve(users);
 }
 
-export function getUser(username: string): User | null | undefined {
+export async function getUser(
+  username: string
+): Promise<User | null | undefined> {
   // Simulate a user lookup
   const user = users.find((user) => user.username === username);
-  return user;
+  return Promise.resolve(user);
 }
 
-export function getAddressHistoryForUser(username: string): UserAddress[] {
+export async function getAddressHistoryForUser(
+  username: string
+): Promise<UserAddress[]> {
   // Simulate a database lookup for user addresses
-  return userAddresses.filter((address) => address.username === username);
+  return Promise.resolve(
+    userAddresses.filter((address) => address.username === username)
+  );
 }
