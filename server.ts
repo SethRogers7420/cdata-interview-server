@@ -46,12 +46,12 @@ app.get("/address-history", async (req, res) => {
 
 const port = process.env.PORT || 55555;
 
-const errorHandler = (
+function errorHandler(
   err: Error,
   req: express.Request,
   res: express.Response,
   next: express.NextFunction
-) => {
+) {
   console.error(err);
   const statusCode = res.statusCode !== 200 ? res.statusCode : 500;
   res.status(statusCode);
@@ -59,7 +59,7 @@ const errorHandler = (
     message: err.message,
     stack: err.stack,
   });
-};
+}
 
 app.use(errorHandler);
 
