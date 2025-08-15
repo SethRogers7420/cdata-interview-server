@@ -36,7 +36,7 @@ app.get("/address-history", async (req, res) => {
   const allUsers = await getAllUsers();
 
   for (const user of allUsers) {
-    const addresses = getAddressHistoryForUser(user.username);
+    const addresses = await getAddressHistoryForUser(user.username);
     if (user.username === username) {
       res.json({ addresses });
       return;
