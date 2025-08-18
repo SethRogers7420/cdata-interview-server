@@ -12,6 +12,7 @@ app.get("/", (req, res) => {
 app.get("/login", async (req, res) => {
   const { username, password } = req.query;
 
+  // Load the user from the database by their username.
   const user = await DB.getUser(username as string);
   if (user === null) {
     res.status(404).json({ message: "User not found" });
