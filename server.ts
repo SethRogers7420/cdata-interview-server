@@ -1,5 +1,5 @@
 import express from "express";
-import { getAddressHistoryForUser, getAllUsers, getUser } from "./db";
+import * as DB from "./db";
 
 const app = express();
 
@@ -12,7 +12,7 @@ app.get("/", (req, res) => {
 app.get("/login", async (req, res) => {
   const { username, password } = req.query;
 
-  const user = await getUser(username as string);
+  const user = await DB.getUser(username as string);
   if (user === null) {
     res.status(404).json({ message: "User not found" });
     return;
@@ -33,10 +33,10 @@ app.get("/address-history", async (req, res) => {
     return;
   }
 
-  const allUsers = await getAllUsers();
+  const allUsers = await DB.getAllUsers();
 
   for (const user of allUsers) {
-    const addresses = await getAddressHistoryForUser(user.username);
+    const addresses = await DB.getAddressHistoryForUser(user.username);
     if (user.username === username) {
       res.json({ addresses });
       return;
