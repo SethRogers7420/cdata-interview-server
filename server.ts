@@ -9,11 +9,16 @@ app.get("/", (req, res) => {
   res.send("Hello, World!");
 });
 
+// GET request that logs in the user by username/password
 app.get("/login", async (req, res) => {
+  // Grab the username and password from query string
   const { username, password } = req.query;
 
   // Load the user from the database by their username.
-  const user = await DB.getUser(username as string);
+  const user = await DB.runQuery(
+    `SELECT * FROM users WHERE username = '${username}'`
+  );
+
   if (user === null) {
     res.status(404).json({ message: "User not found" });
     return;

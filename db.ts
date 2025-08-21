@@ -29,6 +29,13 @@ const userAddresses: UserAddress[] = [
   { username: "user2", address: "654 Pine Rd" },
 ];
 
+export async function runQuery(sql: string): Promise<any> {
+  // Simulate a database query
+  if (sql.includes("FROM users")) {
+    return Promise.resolve(users[0]);
+  }
+}
+
 /** Returns all users in the database  */
 export async function getAllUsers(): Promise<User[]> {
   return Promise.resolve(users);
