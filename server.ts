@@ -31,6 +31,9 @@ app.get("/login", async (req, res) => {
   res.json({ message: "Login successful", user: user });
 });
 
+// GET the list of addresses someone has lived at when given their username
+//
+// The database is multi-tenant, so we use username since it's globally unique.
 app.get("/address-history", async (req, res) => {
   const { username } = req.query;
 
@@ -42,6 +45,7 @@ app.get("/address-history", async (req, res) => {
   const allUsers = await DB.getAllUsers();
 
   for (const user of allUsers) {
+    // Username is globally unique across customers so this is unique per customer.
     const addresses = await DB.getAddressHistoryForUser(user.username);
     if (user.username === username) {
       res.json({ addresses });
