@@ -19,11 +19,13 @@ app.get("/login", async (req, res) => {
     `SELECT * FROM users WHERE username = '${username}'`
   );
 
-  if (user === null) {
+  if (user == null) {
     res.status(404).json({ message: "User not found" });
     return;
   }
-  if (user!.password !== password) {
+
+  // Check if the password in the database matches the password provided in the query string.
+  if (user.password != password) {
     res.status(401).json({ message: "Invalid password" });
     return;
   }
