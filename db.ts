@@ -1,4 +1,5 @@
 export type User = {
+  tenantId: number;
   username: string;
   password: string;
 };
@@ -11,14 +12,20 @@ export type UserAddress = {
 // Pretend this is a database instead of hard-coded
 const users: User[] = [
   {
+    tenantId: 1,
     username: "admin",
     password: "password",
   },
   {
+    tenantId: 2,
     username: "user2",
     password: "password2",
   },
-  { username: "user1", password: "password1" },
+  {
+    tenantId: 1,
+    username: "user1",
+    password: "password1",
+  },
 ];
 
 const userAddresses: UserAddress[] = [
