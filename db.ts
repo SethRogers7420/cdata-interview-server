@@ -1,27 +1,31 @@
 export type User = {
+  userId: number;
   tenantId: number;
   username: string;
   password: string;
 };
 
 export type UserAddress = {
-  username: string;
+  userId: number;
   address: string;
 };
 
 // Pretend this is a database instead of hard-coded
 const users: User[] = [
   {
+    userId: 1,
     tenantId: 1,
     username: "admin",
     password: "password",
   },
   {
+    userId: 2,
     tenantId: 2,
     username: "user2",
     password: "password2",
   },
   {
+    userId: 3,
     tenantId: 1,
     username: "user1",
     password: "password1",
@@ -29,11 +33,11 @@ const users: User[] = [
 ];
 
 const userAddresses: UserAddress[] = [
-  { username: "admin", address: "123 Main St" },
-  { username: "admin", address: "456 Elm St" },
-  { username: "admin", address: "789 Oak St" },
-  { username: "user2", address: "321 Maple Ave" },
-  { username: "user2", address: "654 Pine Rd" },
+  { userId: 1, address: "123 Main St" },
+  { userId: 1, address: "456 Elm St" },
+  { userId: 1, address: "789 Oak St" },
+  { userId: 2, address: "321 Maple Ave" },
+  { userId: 2, address: "654 Pine Rd" },
 ];
 
 export async function runQuery(sql: string): Promise<any> {
@@ -57,10 +61,10 @@ export async function getUser(
 }
 
 export async function getAddressHistoryForUser(
-  username: string
+  userId: number
 ): Promise<UserAddress[]> {
   // Simulate a database lookup for user addresses
   return Promise.resolve(
-    userAddresses.filter((address) => address.username === username)
+    userAddresses.filter((address) => address.userId === userId)
   );
 }

@@ -47,8 +47,8 @@ app.get("/address-history", async (req, res) => {
   const allUsers = await DB.getAllUsers();
 
   for (const user of allUsers) {
-    // Username is globally unique across customers so this is unique per customer.
-    const addresses = await DB.getAddressHistoryForUser(user.username);
+    // Get the address history for this user by user ID, the table has 2 columns, UserID | Address
+    const addresses = await DB.getAddressHistoryForUser(user.userId);
     if (user.username === username) {
       res.json({ addresses });
       return;
